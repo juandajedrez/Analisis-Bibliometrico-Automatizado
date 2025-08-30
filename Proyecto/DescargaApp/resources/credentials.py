@@ -1,3 +1,3 @@
 # credentials.py
 username = "micoreo@midominio.net"
-password = '1234'
+password = '12345'
