@@ -144,6 +144,14 @@ ENV/
 env.bak/
 venv.bak/
 
+# Ignora todo el entorno virtual
+entorno_virtual_analisis/
+
+# Pero NO ignores esta subcarpeta
+!entorno_virtual_analisis/proyecto/
+!entorno_virtual_analisis/proyecto/*.py
+
+
 # Spyder project settings
 .spyderproject
 .spyproject
