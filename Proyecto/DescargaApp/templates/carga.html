@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoritmosPro - Cargando</title>
+
+    <!-- Estilos reutilizados -->
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #00bcd4;
+        }
+
+        .loader {
+            margin-top: 20px;
+            border: 6px solid #1e1e1e;
+            border-top: 6px solid #00bcd4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Buscando el término "{{ termino }}" en las bases de datos...</h1>
+    <div class="loader"></div>
+    <h2 id="mensaje-carga">Cargando...</h2>
+
+<script>
+    function actualizarMensaje() {
+        fetch('/api/estado/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('mensaje-carga').textContent = data.estado;
+            });
+    }
+
+    setInterval(actualizarMensaje, 1000); // actualiza cada segundo
+</script>
+</body>
+</html>
