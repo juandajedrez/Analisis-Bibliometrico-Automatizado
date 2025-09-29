@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', descarga_views.vistaPrincipal, name='buscar_termino'),
     path('buscando/', descarga_views.pantalla_carga, name='pantalla_carga'),
-    path('api/estado/', descarga_views.obtener_estado, name='obtener_estado'),
-    path('api/actualizar_estado/', descarga_views.actualizar_estado, name='actualizar_estado'),
+    path('api/estado/', descarga_views.obtener_estados, name='obtener_estado'),
+
 
 ]
