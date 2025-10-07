@@ -7,7 +7,9 @@ from models import ResulAlgorithm
 
 
 def pathOfFiles(nameFile):
-    pathDirectorie = path.abspath("../files/")
+    pathDirectorie = path.abspath(
+        "../DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
+    )
     full_path = path.join(pathDirectorie, nameFile)
     return full_path
 

@@ -1,37 +1,44 @@
 # Importa las herramientas necesarias de Playwright para automatización web
-from playwright.sync_api import sync_playwright, Page, expect
-# Importa la función de login desde el módulo local
-from .login import login
 # Importa el módulo para manipular rutas y carpetas
 import os
-# Importar la función para actualizar el estado
-from .EstadoGlobal import estado_science
+
 # Fallback HTTP fetch
 import requests
+from playwright.sync_api import Page, expect, sync_playwright
+
+# Importar la función para actualizar el estado
+from .EstadoGlobal import \
+    estado_science  # pyright: ignore[reportAttributeAccessIssue]
+# Importa la función de login desde el módulo local
+from .login import login
+
 
 def descargar_ScienceDirect(query: str):
     try:
-        path = f'DescargaApp/resources/Downloads/ScienceDirect/{query}/'
+        path = f"DescargaApp/resources/Downloads/ScienceDirect/{query}/"
         os.makedirs(path, exist_ok=True)
 
         with sync_playwright() as p:
-            browser = p.chromium.launch(
-                headless=False,
-                args=["--disable-blink-features=AutomationControlled"]
+            browser = p.firefox.launch(
+                headless=False, args=["--disable-blink-features=AutomationControlled"]
             )
 
             context = browser.new_context(
                 accept_downloads=True,
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/117.0.0.0 Safari/537.36",
-                extra_http_headers={"Accept-Language": "en-US,en;q=0.9", "Accept": "text/html,application/xhtml+xml"},
+                extra_http_headers={
+                    "Accept-Language": "en-US,en;q=0.9",
+                    "Accept": "text/html,application/xhtml+xml",
+                },
                 bypass_csp=True,
-                ignore_https_errors=True
+                ignore_https_errors=True,
             )
 
             # logging de recursos fallidos / respuestas >= 400
             def on_response(resp):
                 if resp.status >= 400:
                     print("RESPONSE ERROR", resp.status, resp.url)
+
             def on_request_failed(req):
                 print("REQUEST FAILED", req.failure, req.url)
 
@@ -47,7 +54,14 @@ def descargar_ScienceDirect(query: str):
                 except Exception:
                     try:
                         # fallback con requests (evita bloqueos CORS del navegador)
-                        r = requests.get(request.url, headers={"User-Agent": context._options.get("userAgent", "")}, timeout=20, verify=False)
+                        r = requests.get(
+                            request.url,
+                            headers={
+                                "User-Agent": context._options.get("userAgent", "")
+                            },
+                            timeout=20,
+                            verify=False,
+                        )
                         status = r.status_code
                         body = r.content
                         headers = dict(r.headers)
@@ -83,7 +97,7 @@ def descargar_ScienceDirect(query: str):
             # Realiza el login institucional (las rutas ya están registradas)
             login(page)
             page.wait_for_load_state("networkidle", timeout=120000)
-            
+
             estado_science.actualizar_estado("Buscando")
             page.goto(create_sciencedirect_search_url(0, query))
             max = obtenerDatos(page)
@@ -100,7 +114,6 @@ def descargar_ScienceDirect(query: str):
         print(f"Error en descarga ScienceDirect: {e}")
 
 
-
 # Generate ScienceDirect search URL
 def create_sciencedirect_search_url(page_number: int, query: str):
     query_encoded = query.replace(" ", "%20")
@@ -112,17 +125,25 @@ def extract_sciencedirect_information(page: Page, query: str, path: str, i: int)
 
     estado_science.actualizar_estado("Obteniendo archivos")
     # click en el check de seleccionar todos
-    page.click("#srp-toolbar > div.grid.row.u-display-none.u-display-inline-block-from-sm > span > span.result-header-controls-container > span:nth-child(1) > div > div > label > span.checkbox-check")
+    page.click(
+        "#srp-toolbar > div.grid.row.u-display-none.u-display-inline-block-from-sm > span > span.result-header-controls-container > span:nth-child(1) > div > div > label > span.checkbox-check"
+    )
 
     # click en el boton de exportar
-    page.click("#srp-toolbar > div.grid.row.u-display-none.u-display-inline-block-from-sm > span > span.result-header-controls-container > span.header-links-container > div.ExportAllLink.result-header-action__control.u-margin-s-left > button > span > span > span")
-    
+    page.click(
+        "#srp-toolbar > div.grid.row.u-display-none.u-display-inline-block-from-sm > span > span.result-header-controls-container > span.header-links-container > div.ExportAllLink.result-header-action__control.u-margin-s-left > button > span > span > span"
+    )
+
     # Espera al botón de descarga BibText y lo activa
-    page.wait_for_selector('button.stats-SearchResults_Citation_Download.xpl-btn-primary', timeout=60000)
+    page.wait_for_selector(
+        "button.stats-SearchResults_Citation_Download.xpl-btn-primary", timeout=60000
+    )
     with page.expect_download() as download_info:
-        page.click("body > div:nth-child(23) > div > div > div > p > div > div > button:nth-child(5) > span > span")
+        page.click(
+            "body > div:nth-child(23) > div > div > div > p > div > div > button:nth-child(5) > span > span"
+        )
     download = download_info.value
-    download.save_as(os.path.join(path, f"archivo_{i}_{query}.bib"))    
+    download.save_as(os.path.join(path, f"archivo_{i}_{query}.bib"))
 
 
 def obtenerCant(page):
@@ -143,14 +164,14 @@ def obtenerDatos(page):
     dato = page.text_content("span.search-body-results-text")
     dato = int((dato + "").split()[0].replace(",", ""))
 
-    if (dato >= 1000):
+    if dato >= 1000:
         prueba = 1000
     else:
         prueba = dato
 
     estado_science.actualizar_encontrados(dato)
     estado_science.actualizar_prueba(prueba)
-    if (prueba % 100 == 0):
+    if prueba % 100 == 0:
         return int((prueba / 100) + 1)
     else:
         return int((prueba / 100) + 2)
