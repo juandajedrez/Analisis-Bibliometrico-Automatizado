@@ -21,6 +21,7 @@ def descargar_IEEE(query: str):
 
         # Inicia Playwright en modo síncrono
         with sync_playwright() as p:
+            
             # Lanza el navegador Chromium en modo headless (sin interfaz gráfica)
             browser = p.firefox.launch(headless=True)
 

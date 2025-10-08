@@ -22,6 +22,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.
 # Esto permite mantener la autenticación separada del código de scraping
 from .resources.credentials import username, password
 
+#importa funcion para combinar bibtext
+from .scripts_folder.merge_downloads import merge_bibtex_files
+
+#Funcion para combinar todas las citas en un solo archivo .bib
+def merge_files():
+    merge_bibtex_files()
+
 
 
 
