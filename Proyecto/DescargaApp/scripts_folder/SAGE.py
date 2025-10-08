@@ -8,15 +8,15 @@ def descargar_SAGE(query: str):
     try:
         # Define la ruta de descarga para los archivos BibTeX
         path = f'DescargaApp/resources/Downloads/SAGE/{query}/'
+        
         os.makedirs(path, exist_ok=True)  # Crea la carpeta si no existe
 
         with sync_playwright() as p:
             # Lanza el navegador Chromium con animación lenta para mayor estabilidad visual
-            browser = p.chromium.launch(headless=False, slow_mo=200)
+            browser = p.chromium.launch(headless=True)
             context = browser.new_context(
                 accept_downloads=True,
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                           "AppleWebKit/537.36 Chrome/117.0.0.0 Safari/537.36"
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/117.0.0.0 Safari/537.36"
             )
             page = context.new_page()
             print("Ruta temporal de descarga:", path)

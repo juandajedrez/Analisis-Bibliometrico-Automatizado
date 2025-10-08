@@ -16,12 +16,13 @@ def descargar_IEEE(query: str):
     try:
         # Define la ruta donde se guardarán las descargas, usando el término de búsqueda como subcarpeta
         path = f'DescargaApp/resources/Downloads/IEEE/{query}/'
-        
+
         # Crea la carpeta si no existe
         os.makedirs(path, exist_ok=True)
 
         # Inicia Playwright en modo síncrono
         with sync_playwright() as p:
+            
             # Lanza el navegador Chromium en modo headless (sin interfaz gráfica)
             browser = p.chromium.launch(headless=True)
 

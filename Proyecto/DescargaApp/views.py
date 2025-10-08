@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .scripts import run
+from .scripts import run,merge_files
 from .scripts_folder.EstadoGlobal import estado_ieee, estado_sage
+from .scripts_folder.EstadoGlobal import final_generado
+
 
 # Vista principal que carga el formulario de búsqueda en 'index.html'.
 # Extrae el término ingresado por el usuario desde la URL (GET) y lo pasa al template.
@@ -19,11 +21,23 @@ def pantalla_carga(request):
     run(termino)  # Llama al script principal que inicia el scraping
     estado_ieee.clear()  # Reinicia el estado para IEEE
     estado_sage.clear()  # Reinicia el estado para SAGE
+    global final_generado
+    final_generado=False
     return render(request, 'carga.html', {'termino': termino})
 
 # Vista que expone los estados actuales del scraping en formato JSON.
 # Se usa para actualizar dinámicamente la interfaz con los datos de progreso.
 def obtener_estados(request):
+    global final_generado
+    # Verifica si ambos estados están en "Completado"
+    if (
+        estado_ieee.obtener_estado() == "Completado" and
+        estado_sage.obtener_estado() == "Completado" and
+        not final_generado
+    ):
+        generate_final_file()  # Ejecuta la función
+        final_generado = True  # Marca como ejecutado
+
     return JsonResponse({
         'estado_ieee': estado_ieee.obtener_estado(),           # Estado general IEEE
         'estado_sage': estado_sage.obtener_estado(),           # Estado general SAGE
@@ -34,3 +48,6 @@ def obtener_estados(request):
         'descargados_ieee': estado_ieee.obtener_descargados(), # Total descargados IEEE
         'descargados_sage': estado_sage.obtener_descargados()  # Total descargados SAGE
     })
+
+def generate_final_file():
+    merge_files()

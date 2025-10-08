@@ -163,6 +163,7 @@
             if (data.estado_ieee === "Buscando" || data.estado_sage === "Buscando") {
                 delay = 1000;
             } else if (data.estado_ieee === "Completado" && data.estado_sage === "Completado") {
+                
                 console.log("Todo listo.");
                 return; // No vuelve a llamar
             }
@@ -171,6 +172,7 @@
 
         });
     }
+
 
     actualizarMensaje()
   </script>
