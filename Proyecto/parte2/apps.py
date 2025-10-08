@@ -1,8 +1,8 @@
 from django.apps import AppConfig
 
 
-class DescargaappConfig(AppConfig):
+class Parte2Config(AppConfig):
     default_auto_field = (
         "django.db.models.BigAutoField"  # pyright: ignore[reportAssignmentType]
     )
-    name = "DescargaApp"
+    name = "parte2"
