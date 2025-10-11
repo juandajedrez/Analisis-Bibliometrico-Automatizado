@@ -1,0 +1,17 @@
+concepts_of_generative_ai_in_education = [
+    "Generative models",
+    "Prompting",
+    "Machine learning",
+    "Multimodality",
+    "Fine-tuning",
+    "Training data",
+    "algorithmic bias",
+    "Explainability",
+    "Transparency",
+    "Ethics",
+    "Privacy",
+    "Personalization",
+    "Human-AI interection",
+    "AI literacy",
+    "Co-creation",
+]
