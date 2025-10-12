@@ -1,5 +1,8 @@
-from itertools import combinations
-
 import networkx as nx
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+
+
+def addGraph(articleToAdd):
+    grafo.add_node(str(articleToAdd["title"]), **articleToAdd)
+
+
+grafo = nx.DiGraph()

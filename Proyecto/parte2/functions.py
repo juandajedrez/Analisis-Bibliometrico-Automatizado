@@ -22,6 +22,8 @@ def groupOfFiles(nameFile):
         if "abstract" in fileEntries.fields_dict:
             libraryOfProduct["abstract"] = fileEntries.fields_dict["abstract"].value
         libraryOfProduct["key"] = fileEntries.key
+        libraryOfProduct["title"] = fileEntries.fields_dict["title"].value
+        libraryOfProduct["author"] = fileEntries.fields_dict["author"].value
         filesGroup.append(libraryOfProduct)
     return filesGroup
 
