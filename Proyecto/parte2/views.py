@@ -113,6 +113,7 @@ def returnLeven(request):
         try:
             files = functions.groupOfFiles()
             results = functions.functionGroupResultsLeven(files, dato)
+            print(results)
             data = [
                 {
                     "keyArticleOne": r.keyArticleOne,
@@ -121,6 +122,7 @@ def returnLeven(request):
                 }
                 for r in results
             ]
+            print(data)
             return JsonResponse(data, safe=False)
         except Exception as e:
             return JsonResponse(

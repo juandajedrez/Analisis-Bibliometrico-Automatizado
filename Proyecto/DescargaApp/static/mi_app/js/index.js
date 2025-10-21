@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
           const json = await res.json();
           console.log(json)
-          return json
+          return json;
         } catch (e) {
           console.error("Error al parsear JSON:", e);
           return []; // Retornar arreglo vacío si falla
@@ -65,8 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    let tabla = `<h3>${titulo}</h3><table border="1"><thead><tr>`;
+    // Usar solo las propiedades existentes en los datos recibidos
     const headers = Object.keys(datos[0]);
+    let tabla = `<h3>${titulo}</h3><table border="1"><thead><tr>`;
     headers.forEach(h => tabla += `<th>${h}</th>`);
     tabla += `</tr></thead><tbody>`;
 

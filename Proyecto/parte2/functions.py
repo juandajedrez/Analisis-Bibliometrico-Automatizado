@@ -51,12 +51,16 @@ def functionGroupResultsDistanceLCS(groupFiles, count: int):
         elementOne = groupFiles[i]
         elementTwo = groupFiles[i + 1]
 
-        distance = distanceLCS.editDistanceWith2Ops(
+        result = distanceLCS.editDistanceWith2Ops(
             elementOne["abstract"], elementTwo["abstract"]
         )
 
         groupResultDistanceLCS.append(
-            ResulAlgorithm(elementOne["key"], elementTwo["key"], distance)
+            ResulAlgorithm(
+                keyArticleOne=elementOne["key"],
+                keyArticleTwo=elementTwo["key"],
+                result=result,
+            )
         )
 
     return groupResultDistanceLCS
@@ -74,7 +78,11 @@ def functionGroupResultsCosineSimilarity(groupFiles, count: int):
         )
 
         groupResultCosine.append(
-            ResulAlgorithm(elementOne["key"], elementTwo["key"], distance)
+            ResulAlgorithm(
+                keyArticleOne=elementOne["key"],
+                keyArticleTwo=elementTwo["key"],
+                result=distance,
+            )
         )
 
     return groupResultCosine
@@ -92,7 +100,11 @@ def functionGroupResultsLeven(groupFiles, count: int):
         )
 
         groupResultLevenshtein.append(
-            ResulAlgorithm(elementOne["key"], elementTwo["key"], distance)
+            ResulAlgorithm(
+                keyArticleOne=elementOne["key"],
+                keyArticleTwo=elementTwo["key"],
+                result=distance,
+            )
         )
 
     return groupResultLevenshtein
