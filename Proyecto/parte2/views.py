@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 from . import functions
 
+files = functions.groupOfFiles()
+
 
 # Función auxiliar para procesar datos de entrada
 def get_post_data(request):
@@ -27,11 +29,9 @@ def returnJacardi(request):
 
         try:
             # Leer los archivos
-            files = functions.groupOfFiles()
             # print(files)
             # Llamar la función correcta
             results = functions.functionGroupResultsJaccard(files, dato)
-            print(results)
             data = [
                 {
                     "keyArticleOne": r.keyArticleOne,
@@ -57,7 +57,6 @@ def returnDistanceLCS(request):
             return JsonResponse({"error": "Dato inválido o vacío"}, status=400)
 
         try:
-            files = functions.groupOfFiles()
             results = functions.functionGroupResultsDistanceLCS(files, dato)
             data = [
                 {
@@ -84,7 +83,6 @@ def returnCosin(request):
             return JsonResponse({"error": "Dato inválido o vacío"}, status=400)
 
         try:
-            files = functions.groupOfFiles()
             results = functions.functionGroupResultsCosineSimilarity(files, dato)
             data = [
                 {
@@ -111,8 +109,8 @@ def returnLeven(request):
             return JsonResponse({"error": "Dato inválido o vacío"}, status=400)
 
         try:
-            files = functions.groupOfFiles()
             results = functions.functionGroupResultsLeven(files, dato)
+            print("leven")
             print(results)
             data = [
                 {

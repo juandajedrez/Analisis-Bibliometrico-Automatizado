@@ -1,5 +1,3 @@
-from os import path
-
 import bibtexparser
 
 from .algorithmClassic import (cosineSimilary, distanceLCS, jaccadDistance,
@@ -30,16 +28,36 @@ def groupOfFiles():
 # Función para Jaccard
 def functionGroupResultsJaccard(groupFiles, count: int):
     groupResultJaccard = []
-    for i in range(0, len(groupFiles) - 1):
+    i = 0
+    # Mientras no se alcance el número de resultados deseados
+    # y no se llegue al final de la lista
+    while len(groupResultJaccard) != count and i < len(groupFiles) - 1:
         elementOne = groupFiles[i]
         elementTwo = groupFiles[i + 1]
-        distance = jaccadDistance.jaccard_distance(
+
+        # Verificar que ambos tengan el campo 'abstract'
+        if "abstract" not in elementOne or "abstract" not in elementTwo:
+            print(
+                f"⚠️  Uno de los elementos no tiene 'abstract': "
+                f"{elementOne.get('key')}, {elementTwo.get('key')}"
+            )
+            i += 1
+            continue  # Saltar este par y seguir con el siguiente
+
+        # Calcular la distancia
+        result = distanceLCS.editDistanceWith2Ops(
             elementOne["abstract"], elementTwo["abstract"]
         )
 
         groupResultJaccard.append(
-            ResulAlgorithm(elementOne["key"], elementTwo["key"], distance)
+            ResulAlgorithm(
+                keyArticleOne=elementOne.get("key", "unknown"),
+                keyArticleTwo=elementTwo.get("key", "unknown"),
+                result=result,
+            )
         )
+
+        i += 1  # Avanzar al siguiente par
 
     return groupResultJaccard
 
@@ -47,21 +65,37 @@ def functionGroupResultsJaccard(groupFiles, count: int):
 # Función para LCS
 def functionGroupResultsDistanceLCS(groupFiles, count: int):
     groupResultDistanceLCS = []
-    for i in range(0, count - 1):
+    i = 0
+
+    # Mientras no se alcance el número de resultados deseados
+    # y no se llegue al final de la lista
+    while len(groupResultDistanceLCS) != count and i < len(groupFiles) - 1:
         elementOne = groupFiles[i]
         elementTwo = groupFiles[i + 1]
 
+        # Verificar que ambos tengan el campo 'abstract'
+        if "abstract" not in elementOne or "abstract" not in elementTwo:
+            print(
+                f"⚠️  Uno de los elementos no tiene 'abstract': "
+                f"{elementOne.get('key')}, {elementTwo.get('key')}"
+            )
+            i += 1
+            continue  # Saltar este par y seguir con el siguiente
+
+        # Calcular la distancia
         result = distanceLCS.editDistanceWith2Ops(
             elementOne["abstract"], elementTwo["abstract"]
         )
 
         groupResultDistanceLCS.append(
             ResulAlgorithm(
-                keyArticleOne=elementOne["key"],
-                keyArticleTwo=elementTwo["key"],
+                keyArticleOne=elementOne.get("key", "unknown"),
+                keyArticleTwo=elementTwo.get("key", "unknown"),
                 result=result,
             )
         )
+
+        i += 1  # Avanzar al siguiente par
 
     return groupResultDistanceLCS
 
@@ -69,42 +103,72 @@ def functionGroupResultsDistanceLCS(groupFiles, count: int):
 # Función para Cosine Similarity
 def functionGroupResultsCosineSimilarity(groupFiles, count: int):
     groupResultCosine = []
-    for i in range(0, count - 1):
+
+    i = 0
+    # Mientras no se alcance el número de resultados deseados
+    # y no se llegue al final de la lista
+    while len(groupResultCosine) != count and i < len(groupFiles) - 1:
         elementOne = groupFiles[i]
         elementTwo = groupFiles[i + 1]
 
-        distance = cosineSimilary.cosine_similarity_between_texts(
+        # Verificar que ambos tengan el campo 'abstract'
+        if "abstract" not in elementOne or "abstract" not in elementTwo:
+            print(
+                f"⚠️  Uno de los elementos no tiene 'abstract': "
+                f"{elementOne.get('key')}, {elementTwo.get('key')}"
+            )
+            i += 1
+            continue  # Saltar este par y seguir con el siguiente
+
+        # Calcular la distancia
+        result = distanceLCS.editDistanceWith2Ops(
             elementOne["abstract"], elementTwo["abstract"]
         )
 
         groupResultCosine.append(
             ResulAlgorithm(
-                keyArticleOne=elementOne["key"],
-                keyArticleTwo=elementTwo["key"],
-                result=distance,
+                keyArticleOne=elementOne.get("key", "unknown"),
+                keyArticleTwo=elementTwo.get("key", "unknown"),
+                result=result,
             )
         )
 
+        i += 1  # Avanzar al siguiente par
     return groupResultCosine
 
 
 # Función para Levenshtein
 def functionGroupResultsLeven(groupFiles, count: int):
     groupResultLevenshtein = []
-    for i in range(0, count - 1):
+    i = 0
+    # Mientras no se alcance el número de resultados deseados
+    # y no se llegue al final de la lista
+    while len(groupResultLevenshtein) != count and i < len(groupFiles) - 1:
         elementOne = groupFiles[i]
         elementTwo = groupFiles[i + 1]
 
-        distance = levenshtein.levenshtein_iterative(
+        # Verificar que ambos tengan el campo 'abstract'
+        if "abstract" not in elementOne or "abstract" not in elementTwo:
+            print(
+                f"⚠️  Uno de los elementos no tiene 'abstract': "
+                f"{elementOne.get('key')}, {elementTwo.get('key')}"
+            )
+            i += 1
+            continue  # Saltar este par y seguir con el siguiente
+
+        # Calcular la distancia
+        result = distanceLCS.editDistanceWith2Ops(
             elementOne["abstract"], elementTwo["abstract"]
         )
 
         groupResultLevenshtein.append(
             ResulAlgorithm(
-                keyArticleOne=elementOne["key"],
-                keyArticleTwo=elementTwo["key"],
-                result=distance,
+                keyArticleOne=elementOne.get("key", "unknown"),
+                keyArticleTwo=elementTwo.get("key", "unknown"),
+                result=result,
             )
         )
+
+        i += 1  # Avanzar al siguiente par
 
     return groupResultLevenshtein
