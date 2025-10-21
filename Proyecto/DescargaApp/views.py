@@ -55,5 +55,9 @@ def obtener_estados():
     )
 
 
+def mostrar_html(request):
+    return render(request, "order.html")
+
+
 def generate_final_file():
     merge_files()

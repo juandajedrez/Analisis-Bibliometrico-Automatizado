@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados de Algoritmos</title>
+  <link href="{% static 'mi_app/css/index.css' %}" rel="stylesheet">
+</head>
+<body>
+  <h1>Comparar Algoritmos de Similitud</h1>
+
+  <div class="form-container">
+    <input type="text" id="campoDato" placeholder="Ingrese el texto o número">
+    <button id="btnEnviar">Ejecutar algoritmos</button>
+  </div>
+
+  <div id="resultados">
+    <h2>Resultados</h2>
+    <div id="tablaJacardi"></div>
+    <div id="tablaLcs"></div>
+    <div id="tablaCosen"></div>
+    <div id="tablaLeven"></div>
+  </div>
+
+  <script src="{% static 'mi_app/js/index.js' %}"></script>
+</body>
+</html>
+

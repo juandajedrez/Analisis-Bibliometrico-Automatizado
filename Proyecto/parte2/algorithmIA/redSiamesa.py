@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow as tf  # type:ignore
 from tensorflow.keras import backend as K  # type: ignore
 from tensorflow.keras import layers, models  # type: ignore
 

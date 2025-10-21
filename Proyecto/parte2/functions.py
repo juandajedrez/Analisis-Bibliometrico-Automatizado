@@ -1,9 +1,10 @@
 from os import path
 
 import bibtexparser
-from algorithmClassic import (cosineSimilary, distanceLCS, jaccadDistance,
-                              levenshtein)
-from models import ResulAlgorithm
+
+from .algorithmClassic import (cosineSimilary, distanceLCS, jaccadDistance,
+                               levenshtein)
+from .models import ResulAlgorithm
 
 
 def pathOfFiles(nameFile):
