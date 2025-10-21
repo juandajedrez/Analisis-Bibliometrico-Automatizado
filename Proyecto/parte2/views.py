@@ -3,8 +3,7 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from . import \
-    functions  # asegúrate de que el módulo 'functions' existe y está bien importado
+from . import functions
 
 
 # Función auxiliar para procesar datos de entrada
@@ -27,9 +26,18 @@ def returnJacardi(request):
             return JsonResponse({"error": "Dato inválido o vacío"}, status=400)
 
         try:
-            results = functions.functionGroupResultsJaccad(functions.pathOfFiles, dato)
+            # Leer los archivos
+            files = functions.groupOfFiles()
+            # print(files)
+            # Llamar la función correcta
+            results = functions.functionGroupResultsJaccard(files, dato)
+            print(results)
             data = [
-                {"key1": r.key1, "key2": r.key2, "distance": r.distance}
+                {
+                    "keyArticleOne": r.keyArticleOne,
+                    "keyArticleTwo": r.keyArticleTwo,
+                    "result": r.result,
+                }
                 for r in results
             ]
             return JsonResponse(data, safe=False)
@@ -49,11 +57,14 @@ def returnDistanceLCS(request):
             return JsonResponse({"error": "Dato inválido o vacío"}, status=400)
 
         try:
-            results = functions.functioGroupResultsDistanceLCS(
-                functions.pathOfFiles, int(dato)
-            )
+            files = functions.groupOfFiles()
+            results = functions.functionGroupResultsDistanceLCS(files, dato)
             data = [
-                {"key1": r.key1, "key2": r.key2, "distance": r.distance}
+                {
+                    "keyArticleOne": r.keyArticleOne,
+                    "keyArticleTwo": r.keyArticleTwo,
+                    "result": r.result,
+                }
                 for r in results
             ]
             return JsonResponse(data, safe=False)
@@ -73,11 +84,14 @@ def returnCosin(request):
             return JsonResponse({"error": "Dato inválido o vacío"}, status=400)
 
         try:
-            results = functions.functioGroupResultsCosineSimilarity(
-                functions.pathOfFiles, int(dato)
-            )
+            files = functions.groupOfFiles()
+            results = functions.functionGroupResultsCosineSimilarity(files, dato)
             data = [
-                {"key1": r.key1, "key2": r.key2, "distance": r.distance}
+                {
+                    "keyArticleOne": r.keyArticleOne,
+                    "keyArticleTwo": r.keyArticleTwo,
+                    "result": r.result,
+                }
                 for r in results
             ]
             return JsonResponse(data, safe=False)
@@ -97,11 +111,14 @@ def returnLeven(request):
             return JsonResponse({"error": "Dato inválido o vacío"}, status=400)
 
         try:
-            results = functions.functioGroupResultsLeven(
-                functions.pathOfFiles, int(dato)
-            )
+            files = functions.groupOfFiles()
+            results = functions.functionGroupResultsLeven(files, dato)
             data = [
-                {"key1": r.key1, "key2": r.key2, "distance": r.distance}
+                {
+                    "keyArticleOne": r.keyArticleOne,
+                    "keyArticleTwo": r.keyArticleTwo,
+                    "result": r.result,
+                }
                 for r in results
             ]
             return JsonResponse(data, safe=False)

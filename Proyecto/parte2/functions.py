@@ -7,90 +7,92 @@ from .algorithmClassic import (cosineSimilary, distanceLCS, jaccadDistance,
 from .models import ResulAlgorithm
 
 
-def pathOfFiles(nameFile):
-    pathDirectorie = path.abspath(
-        "../DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
-    )
-    full_path = path.join(pathDirectorie, nameFile)
-    return full_path
+# Devuelve la ruta absoluta de un archivo .bib
+def pathOfFiles():
+    # return path.abspath("../DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib")
+    return "/home/karurosu/Documents/programming/python/projectsAlgorithm/Analisis-Bibliometrico-Automatizado/Proyecto/DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
 
 
-def groupOfFiles(nameFile):
+# Lee un archivo .bib y devuelve una lista de diccionarios con 'key' y 'abstract'
+def groupOfFiles():
     filesGroup = []
-    bibtextFileRead = bibtexparser.parse_file(pathOfFiles(nameFile))
-    for fileEntries in bibtextFileRead.entries:
+    bibtexFileRead = bibtexparser.parse_file(pathOfFiles())
+    for entry in bibtexFileRead.entries:
         libraryOfProduct = {}
-        if "abstract" in fileEntries.fields_dict:
-            libraryOfProduct["abstract"] = fileEntries.fields_dict["abstract"].value
-        libraryOfProduct["key"] = fileEntries.key
+        if "abstract" in entry.fields_dict:
+            libraryOfProduct["abstract"] = entry.fields_dict["abstract"].value
+        libraryOfProduct["key"] = entry.key
         filesGroup.append(libraryOfProduct)
+
     return filesGroup
 
 
-def functioGroupResultsLeven(groupFiles, count: int):
-    groupResultLenvenshtein = []
-    for indexGroupBy in range(0, count, 1):
-        elementOneOfFile = groupFiles[indexGroupBy]
-        elementTwoOfFile = groupFiles[indexGroupBy + 1]
-        groupResultLenvenshtein.append(
-            ResulAlgorithm(
-                elementOneOfFile["key"],
-                elementTwoOfFile["key"],
-                levenshtein.levenshtein_iterative(
-                    elementOneOfFile["abstract"], elementTwoOfFile["abstract"]
-                ),
-            )
+# Función para Jaccard
+def functionGroupResultsJaccard(groupFiles, count: int):
+    groupResultJaccard = []
+    for i in range(0, len(groupFiles) - 1):
+        elementOne = groupFiles[i]
+        elementTwo = groupFiles[i + 1]
+        distance = jaccadDistance.jaccard_distance(
+            elementOne["abstract"], elementTwo["abstract"]
         )
-    return groupResultLenvenshtein
+
+        groupResultJaccard.append(
+            ResulAlgorithm(elementOne["key"], elementTwo["key"], distance)
+        )
+
+    return groupResultJaccard
 
 
-def functioGroupResultsDistanceLCS(groupFiles, count: int):
+# Función para LCS
+def functionGroupResultsDistanceLCS(groupFiles, count: int):
     groupResultDistanceLCS = []
+    for i in range(0, count - 1):
+        elementOne = groupFiles[i]
+        elementTwo = groupFiles[i + 1]
 
-    for indexGroupBy in range(0, count, 1):
-        elementOneOfFile = groupFiles[indexGroupBy]
-        elementTwoOfFile = groupFiles[indexGroupBy + 1]
-        groupResultDistanceLCS.append(
-            ResulAlgorithm(
-                elementOneOfFile["key"],
-                elementTwoOfFile["key"],
-                distanceLCS.editDistanceWith2Ops(
-                    elementOneOfFile["abstract"], elementTwoOfFile["abstract"]
-                ),
-            )
+        distance = distanceLCS.editDistanceWith2Ops(
+            elementOne["abstract"], elementTwo["abstract"]
         )
+
+        groupResultDistanceLCS.append(
+            ResulAlgorithm(elementOne["key"], elementTwo["key"], distance)
+        )
+
     return groupResultDistanceLCS
 
 
-def functioGroupResultsCosineSimilarity(groupFiles, count: int):
-    groupResultsCosineSimilary = []
-    for indexGroupFiles in range(0, count, 1):
-        elementOneOfFile = groupFiles[indexGroupFiles]
-        elementTwoOfFile = groupFiles[indexGroupFiles + 1]
-        groupResultsCosineSimilary.append(
-            ResulAlgorithm(
-                elementOneOfFile["key"],
-                elementTwoOfFile["key"],
-                cosineSimilary.cosine_similarity_between_texts(
-                    elementOneOfFile["abstract"], elementTwoOfFile["abstract"]
-                ),
-            )
+# Función para Cosine Similarity
+def functionGroupResultsCosineSimilarity(groupFiles, count: int):
+    groupResultCosine = []
+    for i in range(0, count - 1):
+        elementOne = groupFiles[i]
+        elementTwo = groupFiles[i + 1]
+
+        distance = cosineSimilary.cosine_similarity_between_texts(
+            elementOne["abstract"], elementTwo["abstract"]
         )
-    return groupResultsCosineSimilary
+
+        groupResultCosine.append(
+            ResulAlgorithm(elementOne["key"], elementTwo["key"], distance)
+        )
+
+    return groupResultCosine
 
 
-def functionGroupResultsJaccad(groupFiles, count: int):
-    groupResultsJaccad = []
-    for indexGroupFiles in range(0, count, 1):
-        elementOneOfFile = groupFiles[indexGroupFiles]
-        elementTwoOfFile = groupFiles[indexGroupFiles]
-        groupResultsJaccad.append(
-            ResulAlgorithm(
-                elementOneOfFile["key"],
-                elementTwoOfFile["key"],
-                jaccadDistance.jaccard_distance(
-                    elementOneOfFile["abstract"], elementTwoOfFile["abstract"]
-                ),
-            )
+# Función para Levenshtein
+def functionGroupResultsLeven(groupFiles, count: int):
+    groupResultLevenshtein = []
+    for i in range(0, count - 1):
+        elementOne = groupFiles[i]
+        elementTwo = groupFiles[i + 1]
+
+        distance = levenshtein.levenshtein_iterative(
+            elementOne["abstract"], elementTwo["abstract"]
         )
-    return groupResultsJaccad
+
+        groupResultLevenshtein.append(
+            ResulAlgorithm(elementOne["key"], elementTwo["key"], distance)
+        )
+
+    return groupResultLevenshtein
