@@ -59,5 +59,9 @@ def mostrar_html(request):
     return render(request, "order.html")
 
 
+def mostrar_analizador(request):
+    return render(request, "analizador.html")
+
+
 def generate_final_file():
     merge_files()

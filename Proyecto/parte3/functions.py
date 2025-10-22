@@ -1,7 +1,8 @@
+import keyword
 import re
-from collections import Counter
 
 import numpy as np
+from parte2 import functions
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
@@ -123,3 +124,23 @@ class KeywordAnalyzerComplete:
             "palabras_asociadas": todas_palabras,
             "precision": precision,
         }
+
+
+def abstractsVerification():
+    abstracts = []
+    dictionaryAuxiliary = functions.groupOfFiles()
+
+    i = 0
+    while i < len(dictionaryAuxiliary):
+        element = dictionaryAuxiliary[i]
+
+        if "abstract" not in element:
+            i += 1
+            continue
+
+        auxiliaryAbstract = element.get("abstract")
+
+        abstracts.append(auxiliaryAbstract)
+        i += 1
+
+    return abstracts

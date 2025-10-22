@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analizador de Palabras Clave</title>
+  <link rel="stylesheet" href="{% static 'mi_app/css/analizador.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h1>Análisis Bibliométrico Automatizado</h1>
+
+    <div class="boton-container">
+      <label for="top_n">Número de resultados (Top N):</label>
+      <input type="number" id="top_n" value="15" min="1" max="50">
+
+      <button id="btnAnalizar">🔍 Ejecutar Análisis</button>
+    </div>
+
+    <div id="resultados" class="resultados"></div>
+  </div>
+
+  <script src="{% static 'mi_app/js/analizador.js' %}"></script>
+</body>
+</html>
+

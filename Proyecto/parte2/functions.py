@@ -37,10 +37,6 @@ def functionGroupResultsJaccard(groupFiles, count: int):
 
         # Verificar que ambos tengan el campo 'abstract'
         if "abstract" not in elementOne or "abstract" not in elementTwo:
-            print(
-                f"⚠️  Uno de los elementos no tiene 'abstract': "
-                f"{elementOne.get('key')}, {elementTwo.get('key')}"
-            )
             i += 1
             continue  # Saltar este par y seguir con el siguiente
 
