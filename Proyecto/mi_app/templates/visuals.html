@@ -1,11 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlgoritmosPro</title>
-
-    <!-- Estilos para tema oscuro y elegante -->
+    <title> Requerimiento 5 </title>
+        <!-- Estilos para tema oscuro y elegante -->
     <style>
         body {
             background-color: #121212;
@@ -56,24 +56,70 @@
         button:hover {
             background-color: #0097a7;
         }
+
+        .thumb {
+            width: 200px;
+            height: auto;
+            max-width: 100%;
+            margin: 10px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        .thumb:hover {
+            transform: scale(1.05);
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 100%;
+        }
+
     </style>
+
+
 </head>
 <body>
+    <h1>
+        Resultados Descargados en pdf correctamente
+    </h1>
+    <h2>
+        resultados: <br>
+    </h2>
+    <div>
+        
+    </div>
 
-    <h1>Mega DataBase</h1>
+<!-- <div class="gallery">
+  <div style="text-align: center; margin-bottom: 30px;">
+    <h3> linea temporal</h3>
+    <a href="{% url 'dendrogram_detail' 'single' %}">
+      <img src="{% static 'static/mi_app/imagenes/linea_temporal.png' %}" class="thumb">
+    </a>
+  </div>
 
-<form action="{% url 'pantalla_carga' %}" method="GET">
-    <input type="text" name="termino" placeholder="Ingresa el término a buscar">
-    <button type="submit">Buscar</button>
-</form>
+  <div style="text-align: center; margin-bottom: 30px;">
+    <h3>Nube de palabras</h3>
+    <a href="{% url 'dendrogram_detail' 'complete' %}">
+      <img src="{% static 'mi_app/imagenes/nube_de_palabras.png' %}" class="thumb">
+    </a>
+  </div>
 
-<form action="{% url 'generate_dendograma_view' %}">
-    <button type="submit">generar</button>
-</form>
+  <div style="text-align: center; margin-bottom: 30px;">
+    <h3>Mapa de calor</h3>
+    <a href="{% url 'dendrogram_detail' 'average' %}">
+      <img src="{% static 'mi_app/imagenes/mapa_de_calor.png' %}" class="thumb">
+    </a>
+  </div> -->
+</div>
 
-<form action="{% url 'generate_visuals_view' %}">
-    <button type="submit">generar pdf con requerimiento 5</button>
-</form>
+
+   
+
+
+
+
+    
+
 
 </body>
 </html>

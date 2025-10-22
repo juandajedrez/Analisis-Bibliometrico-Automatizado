@@ -62,11 +62,6 @@
 
     <h1>Mega DataBase</h1>
 
-<form action="{% url 'pantalla_carga' %}" method="GET">
-    <input type="text" name="termino" placeholder="Ingresa el término a buscar">
-    <button type="submit">Buscar</button>
-</form>
-
 <form action="{% url 'generate_dendograma_view' %}">
     <button type="submit">generar</button>
 </form>
@@ -74,6 +69,8 @@
 <form action="{% url 'generate_visuals_view' %}">
     <button type="submit">generar pdf con requerimiento 5</button>
 </form>
+
+
 
 </body>
 </html>

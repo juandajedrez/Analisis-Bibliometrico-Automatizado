@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dendrograma {{ image_url }}</title>
+    <style>
+        img { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <h1>Dendrograma <br> ubicacion: {{ image_url }} <br> </h1>
+    <img src="{{ image_url }}" alt="Dendrograma">
+</body>
+</html>
