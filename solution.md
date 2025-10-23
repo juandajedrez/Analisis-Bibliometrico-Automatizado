@@ -1,4 +1,7 @@
 # Jaccad distance
+## Formula matemática
+   J(A,B) =|A∩B|/|A|+|B|-|A∩B|
+
 string ="Airport agencies"
 n-ngrama=3
 length=17-3+1=15
@@ -39,5 +42,19 @@ lengthStringTwo:=5
 |0|1|2|3|3|
 
 
-# Cosin similary
+# levenshtein
+
+
+X=stringOne="tab"
+Y=stringTwo="tabe"
+
+
+
+
+
+| 0|  |
+|--|--|
+
+
+
 
