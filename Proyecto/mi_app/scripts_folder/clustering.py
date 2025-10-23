@@ -21,16 +21,38 @@ import bibtexparser
 
 
 # Obtenemos solo los Abstracts del archivo bibtex
+from typing import List, Dict
+import bibtexparser
+
+
+
 def load_abstracts_from_bibtex(path: str) -> List[Dict]:
+    # Leer archivo .bib
     with open(path, 'r', encoding='utf-8') as f:
-        bib = bibtexparser.load(f)
+        content = f.read()
+
+    # Parsear el contenido
+    bib_db = bibtexparser.parse_string(content)
+
     entries = []
-    #el cuerpo de los entries se compone de abstract y titulo del articulo y el ID
-    for e in bib.entries:
-        abstract = e.get('abstract') or ''
-        title = e.get('title') or e.get('ID') or ''
-        entries.append({'id': e.get('ID', ''), 'title': title, 'abstract': abstract})
+    for entry in bib_db.entries:
+        # Convertir los objetos Field a un diccionario
+        if hasattr(entry, "fields"):
+            fields = {f.key: f.value for f in entry.fields}
+        else:
+            fields = {}
+
+        abstract = fields.get('abstract', '').strip()
+        title = fields.get('title', '').strip() or entry.key or ''
+
+        entries.append({
+            'id': entry.key,
+            'title': title,
+            'abstract': abstract
+        })
+
     return entries
+
 
 # vectorizamos los abstract por medio del metodo TF-IDF
 def preprocess_and_vectorize(abstracts: List[str],

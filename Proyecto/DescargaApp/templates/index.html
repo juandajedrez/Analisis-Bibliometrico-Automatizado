@@ -66,14 +66,18 @@
     <input type="text" name="termino" placeholder="Ingresa el término a buscar">
     <button type="submit">Buscar</button>
 </form>
-
+&nbsp;
+<div>
 <form action="{% url 'generate_dendograma_view' %}">
-    <button type="submit">generar</button>
+    <button type="submit">generar dendogramas</button>
 </form>
-
+</div>
+&nbsp;
+<div>
 <form action="{% url 'generate_visuals_view' %}">
-    <button type="submit">generar pdf con requerimiento 5</button>
+    <button type="submit">generar pdf con analisis visuales 5</button>
 </form>
+</div>
 
 </body>
 </html>

@@ -3,6 +3,7 @@ import os
 from django.templatetags.static import static
 from pathlib import Path
 from django.http import FileResponse
+from django.conf import settings
 
 
 # Create your views here.
@@ -22,7 +23,7 @@ def generate_dendograma_view(request):
 
 def dendrogram_detail(request, tipo):
     filename = f'dendrogram_{tipo}.png'
-    filepath = os.path.join('mi_app','static', 'mi_app', 'outputs', filename)
+    filepath = os.path.join(settings.BASE_DIR,'mi_app','static', 'mi_app', 'outputs', filename)
     print(filepath)
 
     # Verificar que la imagen existe
@@ -30,16 +31,14 @@ def dendrogram_detail(request, tipo):
         return HttpResponse("error")
 
     image_url = static(f'mi_app/outputs/{filename}')
+    print (image_url)
     return render(request, 'dendrogram_detail.html', {'image_url': image_url})
 
 def generate_visuals_view(request):
     generate_visuals()
 
     # Ruta absoluta al archivo
-    file_path = Path.home() / "Downloads" / "visualizaciones.pdf"
-
-    if not file_path.exists():
-        return HttpResponse("Archivo no encontrado", status=404)
+    file_path = os.path.join(settings.BASE_DIR, "mi_app/static/mi_app/imagenes/visualizaciones.pdf")
 
     
     # Devuelve el archivo como respuesta para descarga
