@@ -60,6 +60,122 @@ length=17-3+1=15
 
 # Distance LCS
 
+## Código
+```python
+
+def editDistanceWith2Ops(X, Y):
+    m = len(X)
+    n = len(Y)
+    L = [[0 for x in range(n + 1)] for y in range(m + 1)]
+    for i in range(m + 1):
+        for j in range(n + 1):
+            if i == 0 or j == 0:
+                L[i][j] = 0
+            elif X[i - 1] == Y[j - 1]:
+                L[i][j] = L[i - 1][j - 1] + 1
+            else:
+                L[i][j] = max(L[i - 1][j], L[i][j - 1])
+
+    lcs = L[m][n]
+    return (m - lcs) + (n - lcs)
+```
+
+
+## Código
+
+```python
+def levenshtein_iterative(str1, str2):
+    m, n = len(str1), len(str2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        for j in range(n + 1):
+            if i == 0:
+                dp[i][j] = j
+            elif j == 0:
+                dp[i][j] = i
+            elif str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+    return dp[m][n]
+
+```
+## 2. Datos de prueba
+
+| Variable | Descripción | Valor |
+|-----------|--------------|--------|
+| X | Cadena 1 | "tab" |
+| Y | Cadena 2 | "tabe" |
+| m | Longitud de X | 3 |
+| n | Longitud de Y | 4 |
+| L | Matriz (m+1) × (n+1) inicializada en 0 | 4 × 5 |
+
+---
+
+## 3. Tabla que se construye
+
+La matriz L almacena en `L[i][j]` la longitud de la subsecuencia común más larga entre `X[:i]` y `Y[:j]`.
+
+| i/j | 0 | 1 | 2 | 3 | 4 |
+|-----|---|---|---|---|---|
+| 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 0 |   |   |   |   |
+| 2 | 0 |   |   |   |   |
+| 3 | 0 |   |   |   |   |
+
+---
+
+### Paso 1: i = 1 ('t')
+
+| j | X[i-1] | Y[j-1] | Resultado | L[i][j] |
+|---|---------|---------|------------|----------|
+| 1 | 't' = 't' | iguales | L[1][1] = L[0][0] + 1 | 1 |
+| 2 | 't' ≠ 'a' | L[1][2] = max(L[0][2], L[1][1]) | 1 |
+| 3 | 't' ≠ 'b' | L[1][3] = max(L[0][3], L[1][2]) | 1 |
+| 4 | 't' ≠ 'e' | L[1][4] = max(L[0][4], L[1][3]) | 1 |
+
+| i/j | 0 | 1 | 2 | 3 | 4 |
+|-----|---|---|---|---|---|
+| 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 0 | 1 | 1 | 1 | 1 |
+| 2 | 0 |   |   |   |   |
+| 3 | 0 |   |   |   |   |
+
+---
+
+### Paso 2: i = 2 ('a')
+
+| j | X[i-1] | Y[j-1] | Resultado | L[i][j] |
+|---|---------|---------|------------|----------|
+| 1 | 'a' ≠ 't' | max(L[1][1], L[2][0]) | 1 |
+| 2 | 'a' = 'a' | L[2][2] = L[1][1] + 1 | 2 |
+| 3 | 'a' ≠ 'b' | max(L[1][3], L[2][2]) | 2 |
+| 4 | 'a' ≠ 'e' | max(L[1][4], L[2][3]) | 2 |
+
+| i/j | 0 | 1 | 2 | 3 | 4 |
+|-----|---|---|---|---|---|
+| 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 0 | 1 | 1 | 1 | 1 |
+| 2 | 0 | 1 | 2 | 2 | 2 |
+| 3 | 0 |   |   |   |   |
+
+---
+
+### Paso 3: i = 3 ('b')
+
+| j | X[i-1] | Y[j-1] | Resultado | L[i][j] |
+|---|---------|---------|------------|----------|
+| 1 | 'b' ≠ 't' | max(L[2][1], L[3][0]) | 1 |
+| 2 | 'b' ≠ 'a' | max(L[2][2], L[3][1]) | 2 |
+| 3 | 'b' = 'b' | L[3][3] = L[2][2] + 1 | 3 |
+| 4 | 'b' ≠ 'e' | max(L[2][4], L[3][3]) | 3 |
+
+| i/j | 0 | 1 | 2 | 3 | 4 |
+|-----|---|---|---|---|---|
+| 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 0 | 1 | 1 | 1 | 1 |
+| 2 | 0 | 1 | 2 | 2 | 2 |
+| 3 | 0 | 1 | 2 | 3 | 3 |
 ## Formula matemática
 
 $$
@@ -68,20 +184,6 @@ $$
 
 
 ## Ejemplo
-X=stringOne="tab"
-Y=stringTwo="tabe"
-
-lengthStringOne=4
-lengthStringTwo:=5
-
-|0|0|0|0|0|
-|-|-|-|-|-|
-|0|1|1|1|1|
-|-|-|-|-|-|
-|0|1|2|2|2|
-|-|-|-|-|-|
-|0|1|2|3|3|
-
 
 # levenshtein
 
