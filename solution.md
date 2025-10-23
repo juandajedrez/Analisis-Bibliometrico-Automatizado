@@ -86,12 +86,107 @@ lengthStringTwo:=5
 # levenshtein
 
 ## Ejemplo
-X=stringOne="tab"
-Y=stringTwo="tabe"
+
+| Variable | Descripción | Valor |
+|-----------|--------------|--------|
+| `str1` | Cadena 1 | `"tab"` |
+| `str2` | Cadena 2 | `"tabe"` |
+| `m` | Longitud de `str1` | 3 |
+| `n` | Longitud de `str2` | 4 |
+| `dp` | Matriz (m+1) × (n+1) | 4 × 5 |
+
+---
+
+## 3️⃣ Estructura base de la matriz `dp`
 
 
-| 0|  |
-|--|--|
+| i/j | 0 | 1 | 2 | 3 | 4 |
+|-----|---|---|---|---|---|
+| 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 0 | 0 | 0 | 0 | 0 |
+| 2 | 0 | 0 | 0 | 0 | 0 |
+| 3 | 0 | 0 | 0 | 0 | 0 |
+
+---
+
+## 4️⃣ Inicialización de la primera fila y columna
+
+- Si `i == 0` → `dp[0][j] = j` (se necesitan `j` inserciones para formar la subcadena de `str2`)
+- Si `j == 0` → `dp[i][0] = i` (se necesitan `i` eliminaciones para vaciar `str1`)
+
+| i/j | 0 | 1 | 2 | 3 | 4 |
+|-----|---|---|---|---|---|
+| 0 | 0 | 1 | 2 | 3 | 4 |
+| 1 | 1 | 0 | 0 | 0 | 0 |
+| 2 | 2 | 0 | 0 | 0 | 0 |
+| 3 | 3 | 0 | 0 | 0 | 0 |
+
+---
+
+##  Relleno de la matriz paso a paso
+
+###  Comparamos los caracteres
+
+| Índice | `str1[i-1]` | `str2[j-1]` | Acción | Valor resultante |
+|--------|---------------|--------------|---------|-------------------|
+| i=1, j=1 | 't' = 't' | true | `dp[1][1] = dp[0][0] = 0` |
+| i=1, j=2 | 't' ≠ 'a' |  false| `dp[1][2] = 1 + min( dp[0][2]=2, dp[1][1]=0, dp[0][1]=1 ) = 1` |
+| i=1, j=3 | 't' ≠ 'b' | false | `dp[1][3] = 1 + min(3, 1, 2) = 2` |
+| i=1, j=4 | 't' ≠ 'e' |  false| `dp[1][4] = 1 + min(4, 2, 3) = 3` |
+
+### Matriz parcial
+
+| i/j | 0 | 1 | 2 | 3 | 4 |
+|-----|---|---|---|---|---|
+| 0 | 0 | 1 | 2 | 3 | 4 |
+| 1 | 1 | 0 | 1 | 2 | 3 |
+| 2 | 2 | 0 | 0 | 0 | 0 |
+| 3 | 3 | 0 | 0 | 0 | 0 |
+
+---
+
+### Segunda fila (i = 2, carácter `'a'`)
+
+| i=2, j=1 | 'a' ≠ 't' | `dp[2][1] = 1 + min(1,2,1)=1` |
+| i=2, j=2 | 'a' = 'a' | true `dp[2][2] = dp[1][1] = 0` |
+| i=2, j=3 | 'a' ≠ 'b' | false `dp[2][3] = 1 + min(2,0,1)=1` |
+| i=2, j=4 | 'a' ≠ 'e' | false `dp[2][4] = 1 + min(3,1,2)=2` |
+
+| i/j | 0 | 1 | 2 | 3 | 4 |
+|-----|---|---|---|---|---|
+| 0 | 0 | 1 | 2 | 3 | 4 |
+| 1 | 1 | 0 | 1 | 2 | 3 |
+| 2 | 2 | 1 | 0 | 1 | 2 |
+| 3 | 3 | 0 | 0 | 0 | 0 |
+
+---
+
+### Tercera fila (i = 3, carácter `'b'`)
+
+| i=3, j=1 | 'b' ≠ 't' | `dp[3][1] = 1 + min(2,3,1)=2` |
+| i=3, j=2 | 'b' ≠ 'a' | `dp[3][2] = 1 + min(1,2,0)=1` |
+| i=3, j=3 | 'b' = 'b' | true `dp[3][3] = dp[2][2] = 0` |
+| i=3, j=4 | 'b' ≠ 'e' | false `dp[3][4] = 1 + min(2,0,1)=1` |
+
+| i/j | 0 | 1 | 2 | 3 | 4 |
+|-----|---|---|---|---|---|
+| 0 | 0 | 1 | 2 | 3 | 4 |
+| 1 | 1 | 0 | 1 | 2 | 3 |
+| 2 | 2 | 1 | 0 | 1 | 2 |
+| 3 | 3 | 2 | 1 | 0 | 1 |
+
+---
+
+## Tabla terminada
+
+|   | "" | **t** | **a** | **b** | **e** |
+|---|---|---|---|---|---|
+| **""** | 0 | 1 | 2 | 3 | 4 |
+| **t** | 1 | 0 | 1 | 2 | 3 |
+| **a** | 2 | 1 | 0 | 1 | 2 |
+| **b** | 3 | 2 | 1 | 0 | 1 |
+
+---
 
 
 
