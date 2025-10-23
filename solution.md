@@ -59,6 +59,17 @@ length=17-3+1=15
 
 
 # Distance LCS
+## Formula matemática
+\[
+LCS(i, j) =
+\begin{cases}
+0, & \text{si } i = 0 \text{ o } j = 0 \\[6pt]
+LCS(i - 1, j - 1) + 1, & \text{si } x_i = y_j \\[6pt]
+\max(LCS(i - 1, j), \; LCS(i, j - 1)), & \text{si } x_i \neq y_j
+\end{cases}
+\]
+
+
 
 ## Código
 ```python
