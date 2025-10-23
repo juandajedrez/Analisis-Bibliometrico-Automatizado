@@ -1,4 +1,34 @@
 # Jaccad distance
+## Función
+```python
+from typing import Set
+
+
+def generate_ngrams(text: str, n: int) -> Set[str]:
+    if n <= 0:
+        raise ValueError("n must be a positive integer")
+    lowered = text.lower()
+    length = len(lowered)
+    if length < n:
+        return set()
+    return {lowered[i : i + n] for i in range(length - n + 1)}
+
+
+def jaccard_distance(s1: str, s2: str, n: int = 2) -> float:
+    grams1 = generate_ngrams(s1, n)
+    grams2 = generate_ngrams(s2, n)
+
+    intersection = grams1.intersection(grams2)
+    union = grams1.union(grams2)
+
+    if not union:
+        return 0.0
+
+    similarity = len(intersection) / len(union)
+    return 1.0 - similarity
+
+```
+
 ## Formula matemática
 $$
 J(A,B) = \frac{|A \cap B|}{|A| + |B| - |A \cap B|}
@@ -58,9 +88,6 @@ lengthStringTwo:=5
 ## Ejemplo
 X=stringOne="tab"
 Y=stringTwo="tabe"
-
-
-
 
 
 | 0|  |
