@@ -61,15 +61,7 @@ length=17-3+1=15
 # Distance LCS
 ## Formula matemática
 
-$$
-\text{LCS}(X, Y) = 
-\begin{cases} 
-0 & \text{si } X = "" \text{ o } Y = "" \\[2mm]
-1 + \text{LCS}(X[1:], Y[1:]) & \text{si } X_1 = Y_1 \\[1mm]
-\max(\text{LCS}(X[1:], Y), \text{LCS}(X, Y[1:])) & \text{si } X_1 \neq Y_1
-\end{cases}
-$$
-
+![LCS](https://quicklatex.com/cache3/09/ql_56b45b549b9f3c78808a2bac6b267709_l3.png)
 
 
 ## Código
@@ -172,10 +164,7 @@ La matriz L almacena en `L[i][j]` la longitud de la subsecuencia común más lar
 | 3 | 0 | 1 | 2 | 3 | 3 |
 ## Formula matemática
 
-$$
-O\left(2^{n_{1}} \sum_{i > 1} n_{i}\right)
-$$
-
+![distance](https://quicklatex.com/cache3/ff/ql_9c49bef55fd7de72b0b8b94eac486eff_l3.png)
 
 ## Ejemplo
 
