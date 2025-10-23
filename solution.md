@@ -60,14 +60,15 @@ length=17-3+1=15
 
 # Distance LCS
 ## Formula matemática
-\[
-LCS(i, j) =
-\begin{cases}
-0, & \text{si } i = 0 \text{ o } j = 0 \\[6pt]
-LCS(i - 1, j - 1) + 1, & \text{si } x_i = y_j \\[6pt]
-\max(LCS(i - 1, j), \; LCS(i, j - 1)), & \text{si } x_i \neq y_j
+
+$$
+\text{LCS}(X, Y) = 
+\begin{cases} 
+0 & \text{si } X = "" \text{ o } Y = "" \\[2mm]
+1 + \text{LCS}(X[1:], Y[1:]) & \text{si } X_1 = Y_1 \\[1mm]
+\max(\text{LCS}(X[1:], Y), \text{LCS}(X, Y[1:])) & \text{si } X_1 \neq Y_1
 \end{cases}
-\]
+$$
 
 
 
