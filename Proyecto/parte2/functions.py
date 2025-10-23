@@ -1,5 +1,5 @@
 import bibtexparser
-
+import os 
 from .algorithmClassic import (cosineSimilary, distanceLCS, jaccadDistance,
                                levenshtein)
 from .models import ResulAlgorithm
@@ -7,9 +7,9 @@ from .models import ResulAlgorithm
 
 # Devuelve la ruta absoluta de un archivo .bib
 def pathOfFiles():
-    # return path.abspath("../DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib")
-    return "/home/karurosu/Documents/programming/python/projectsAlgorithm/Analisis-Bibliometrico-Automatizado/Proyecto/DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
-
+    #return os.path.abspath("../Proyecto/DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib")
+    # return "/home/karurosu/Documents/programming/python/projectsAlgorithm/Analisis-Bibliometrico-Automatizado/Proyecto/DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
+    return f"DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
 
 # Lee un archivo .bib y devuelve una lista de diccionarios con 'key' y 'abstract'
 def groupOfFiles():

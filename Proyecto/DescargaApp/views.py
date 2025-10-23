@@ -30,7 +30,7 @@ def pantalla_carga(request):
 
 # Vista que expone los estados actuales del scraping en formato JSON.
 # Se usa para actualizar dinámicamente la interfaz con los datos de progreso.
-def obtener_estados():
+def obtener_estados(request):
     global final_generado
     # Verifica si ambos estados están en "Completado"
     if (

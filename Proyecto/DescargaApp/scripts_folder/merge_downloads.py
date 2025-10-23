@@ -7,10 +7,11 @@ def merge_bibtex_files( ):
     merged_content = "" #archivo final combinado
 
     # Ruta relativa del losa crhivos descargados
-    relative_folder_path = os.path.join('DescargaApp', 'resources', 'Downloads')
-    folder_path = os.path.abspath(relative_folder_path)
+    #relative_folder_path = os.path.join('DescargaApp', 'resources', 'Downloads')
+    #folder_path = os.path.abspath(relative_folder_path)
     # Aseguramos que la carpeta exista
-    os.makedirs(os.path.dirname(folder_path), exist_ok=True)
+    #os.makedirs(os.path.dirname(folder_path), exist_ok=True)
+    folder_path = f"DescargaApp/resources/Downloads"
 
     # Recorrer carpeta y subcarpetas
     input_files = []
@@ -49,13 +50,13 @@ def merge_bibtex_files( ):
     merged_content = '\n\n'.join(entries[k] for k in sorted(entries))
 
     # Ruta relativa del archivo final
-    relative_output_path = os.path.join('DescargaApp', 'resources', 'Downloads','archivo_combinado', 'archivo_final.bib')
+    #relative_output_path = os.path.join('DescargaApp', 'resources', 'Downloads','archivo_combinado', 'archivo_final.bib')
 
     # Convertimos a ruta absoluta
-    output_file = os.path.abspath(relative_output_path)
+    #output_file = os.path.abspath(relative_output_path)
 
-    # Aseguramos que la carpeta exista
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    output_file = f"DescargaApp/resources/Downloads/archivo_combinado/archivofinal.bib"
+
     with open(output_file, 'w', encoding='utf-8') as f_out:
         f_out.write(merged_content)
 
