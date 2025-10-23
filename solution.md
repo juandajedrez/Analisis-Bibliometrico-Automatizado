@@ -1,6 +1,9 @@
 # Jaccad distance
 ## Formula matemática
-    $$J(A,B) = \frac{|A \cap B|}{|A| + |B| - |A \cap B|}$$
+$$
+J(A,B) = \frac{|A \cap B|}{|A| + |B| - |A \cap B|}
+$$
+
 string ="Airport agencies"
 n-ngrama=3
 length=17-3+1=15
