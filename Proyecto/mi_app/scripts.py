@@ -13,7 +13,7 @@ from .scripts_folder.visualAnalisis import data_from_bibtext
 # relative_output_path = os.path.join(BASE_DIR,'Proyecto','DescargaApp', 'resources', 'Downloads','archivo_combinado', 'archivo_final.bib')
 # ruta = "./Proyecto/DescargaApp/resources/Downloads/archivo_combinado/archivofinal.bib"
 ruta = os.path.join(
-        settings.BASE_DIR, "DescargaApp/resources/Downloads/archivo_combinado/archivofinal.bib"
+        settings.BASE_DIR, "DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
     )
 
 

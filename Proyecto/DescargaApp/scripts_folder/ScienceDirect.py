@@ -19,7 +19,7 @@ def descargar_ScienceDirect(query: str):
         os.makedirs(path, exist_ok=True)
 
         with sync_playwright() as p:
-            browser = p.firefox.launch(
+            browser = p.Chromium.launch(
                 headless=False, args=["--disable-blink-features=AutomationControlled"]
             )
 

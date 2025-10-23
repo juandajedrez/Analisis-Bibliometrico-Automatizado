@@ -154,7 +154,7 @@ def heat_map(df: pd.DataFrame):
         ax.set_xlabel("País")
         ax.set_ylabel("Cantidad de artículos")
         ax.set_title("Distribución geográfica por primer autor (fallback)")
-        fig.savefig("static/mi_app/imagenes/mapa_de_calor.png", bbox_inches="tight")
+        fig.savefig("static/mi_app/imagenes/mapa_de_calor.jpg",dpi=400, bbox_inches="tight")
         plt.close(fig)
 
 #creamos la nube de palabras
@@ -195,19 +195,28 @@ def temporal_line(df: pd.DataFrame):
     pivot = pivot.sort_index()
     pivot = pivot[pivot.sum().sort_values(ascending=False).index]  # ordenar columnas
 
-    fig, ax = plt.subplots(figsize=(14, 7))
+    fig, ax = plt.subplots(figsize=(16, 8))  # más ancho
     pivot.plot(ax=ax, marker="o", linewidth=2)
 
     ax.set_xlabel("Año", fontsize=12)
     ax.set_ylabel("Cantidad de publicaciones", fontsize=12)
     ax.set_title("Publicaciones por año y revista", fontsize=14)
-    ax.legend(title="Revista", bbox_to_anchor=(1.02, 1), loc="upper left", fontsize=9)
+
+    # Leyenda arriba centrada
+    ax.legend(
+        title="Revista",
+        bbox_to_anchor=(0.5, 1.15),  # centrado arriba
+        loc="upper center",
+        fontsize=9,
+        ncol=5  # ajusta según cantidad de revistas
+    )
+
     ax.tick_params(axis='x', rotation=45)
-    plt.tight_layout()
-    fig.savefig(
-        os.path.join(settings.BASE_DIR, "mi_app/static/mi_app/imagenes/linea_temporal.png"),
-        dpi=400,bbox_inches="tight")
+    plt.tight_layout(rect=[0, 0, 1, 0.95])  # deja espacio para la leyenda arriba
+    os.makedirs("imagenes", exist_ok=True)
+    fig.savefig("imagenes/linea_temporal.png",dpi=400, bbox_inches="tight")
     plt.close(fig)
+
 
 
 

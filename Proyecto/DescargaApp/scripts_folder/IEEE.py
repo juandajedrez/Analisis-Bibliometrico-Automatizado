@@ -23,7 +23,7 @@ def descargar_IEEE(query: str):
         with sync_playwright() as p:
             
             # Lanza el navegador Chromium en modo headless (sin interfaz gráfica)
-            browser = p.firefox.launch(headless=True)
+            browser = p.chromium.launch(headless=True)
 
             # Crea un contexto de navegador que permite descargas y simula un navegador real con user-agent
             context = browser.new_context(
