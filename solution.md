@@ -57,16 +57,15 @@ lengthStringTwo:=5
 
 ## Formula matemática
 $$
-lev_{a,b}(i,j) =
+lev_{a,b}(i,j)=
 \begin{cases}
-\max(i, j), & \text{si } \min(i, j) = 0, \\
-\min \left\{
-\begin{matrix}
-lev_{a,b}(i-1, j) + 1 \\
-lev_{a,b}(i, j-1) + 1 \\
-lev_{a,b}(i-1, j-1) + 1_{a_i \ne b_j}
-\end{matrix}
-\right., & \text{si } \min(i, j) \ne 0
+\max(i,j), & \text{si } \min(i,j)=0,\\[6pt]
+\displaystyle
+\min\left\{
+lev_{a,b}(i-1,j)+1,\; 
+lev_{a,b}(i,j-1)+1,\;
+lev_{a,b}(i-1,j-1)+\mathbf{1}_{a_i\ne b_j}
+\right\}, & \text{si } \min(i,j)\ne 0.
 \end{cases}
 $$
 
