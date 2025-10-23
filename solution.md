@@ -4,6 +4,7 @@ $$
 J(A,B) = \frac{|A \cap B|}{|A| + |B| - |A \cap B|}
 $$
 
+## Ejemplo
 string ="Airport agencies"
 n-ngrama=3
 length=17-3+1=15
@@ -29,6 +30,9 @@ length=17-3+1=15
 
 # Distance LCS
 
+## Formula matemática
+
+## Ejemplo
 X=stringOne="tab"
 Y=stringTwo="tabe"
 
