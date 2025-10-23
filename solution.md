@@ -181,7 +181,7 @@ $$
 
 ---
 
-## 3️⃣ Estructura base de la matriz `dp`
+##  Estructura 
 
 
 | i/j | 0 | 1 | 2 | 3 | 4 |
@@ -193,7 +193,7 @@ $$
 
 ---
 
-## 4️⃣ Inicialización de la primera fila y columna
+##  se incializan
 
 - Si `i == 0` → `dp[0][j] = j` (se necesitan `j` inserciones para formar la subcadena de `str2`)
 - Si `j == 0` → `dp[i][0] = i` (se necesitan `i` eliminaciones para vaciar `str1`)
