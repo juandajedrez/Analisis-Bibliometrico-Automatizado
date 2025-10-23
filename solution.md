@@ -32,6 +32,11 @@ length=17-3+1=15
 
 ## Formula matemática
 
+$$
+O\left(2^{n_{1}} \sum_{i > 1} n_{i}\right)
+$$
+
+
 ## Ejemplo
 X=stringOne="tab"
 Y=stringTwo="tabe"
