@@ -1,6 +1,7 @@
 import os
 
 import bibtexparser
+from django.conf import settings
 
 from .algorithmClassic import (cosineSimilary, distanceLCS, jaccadDistance,
                                levenshtein)
@@ -12,13 +13,9 @@ def pathOfFiles():
     # return os.path.abspath("../Proyecto/DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib")
     # return "/home/karurosu/Documents/programming/python/projectsAlgorithm/Analisis-Bibliometrico-Automatizado/Proyecto/DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
     # return f"../DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
-    base_dir = os.path.dirname(
-        os.path.abspath(__file__)
-    )  # Carpeta donde está functions.py
-    ruta = os.path.join(
-        base_dir, "../DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
+    return os.path.join(
+        settings.BASE_DIR, "DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
     )
-    return os.path.normpath(ruta)
 
 
 # Lee un archivo .bib y devuelve una lista de diccionarios con 'key' y 'abstract'
