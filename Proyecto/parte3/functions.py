@@ -32,10 +32,10 @@ class KeywordAnalyzerComplete:
         abstracts_clean = [
             self.limpiar_texto(a) for a in abstracts if isinstance(a, str)
         ]
-        print(f"✅ Procesando {len(abstracts_clean)} abstracts...")
+        print(f" Procesando {len(abstracts_clean)} abstracts...")
 
         # -----------------------
-        # 1️⃣ Conteo exacto de palabras clave
+        #  Conteo exacto de palabras clave
         # -----------------------
         frecuencias = np.zeros(
             (len(abstracts_clean), len(self.palabras_clave)), dtype=int
@@ -52,7 +52,7 @@ class KeywordAnalyzerComplete:
         total_palabra = frecuencias.sum(axis=0)
 
         # -----------------------
-        # 2️⃣ TF-IDF (limitado al vocabulario de palabras clave)
+        # TF-IDF (limitado al vocabulario de palabras clave)
         # -----------------------
         try:
             vectorizer = TfidfVectorizer(
@@ -64,18 +64,18 @@ class KeywordAnalyzerComplete:
             tfidf_array = tfidf_matrix.toarray()
             tfidf_total = tfidf_array.sum(axis=0)
         except ValueError:
-            print("⚠️ Error en TF-IDF (posiblemente vocabulario vacío)")
+            print("Error en TF-IDF (posiblemente vocabulario vacío)")
             tfidf_total = np.zeros(len(self.palabras_clave))
 
         # -----------------------
-        # 3️⃣ Score combinado (frecuencia + TF-IDF)
+        # 3️ Score combinado (frecuencia + TF-IDF)
         # -----------------------
         max_count = max(total_palabra.max(), 1)
         max_tfidf = max(tfidf_total.max(), 1)
         score = (total_palabra / max_count) + (tfidf_total / max_tfidf)
 
         # -----------------------
-        # 4️⃣ Top N palabras clave más relevantes
+        # 4️ Top N palabras clave más relevantes
         # -----------------------
         indices_top = np.argsort(score)[::-1][:top_n]
         palabras_asociadas = [
@@ -90,7 +90,7 @@ class KeywordAnalyzerComplete:
         ]
 
         # -----------------------
-        # 5️⃣ Detección de nuevas palabras relevantes en el corpus
+        #  Detección de nuevas palabras relevantes en el corpus
         # -----------------------
         try:
             vectorizer_full = TfidfVectorizer(
@@ -121,7 +121,7 @@ class KeywordAnalyzerComplete:
                 if len(nuevas) >= top_n:
                     break
         except Exception as e:
-            print("⚠️ Error en detección de nuevas palabras:", e)
+            print(" Error en detección de nuevas palabras:", e)
             nuevas = []
 
         # Combinar todas
@@ -151,11 +151,11 @@ def abstractsVerification():
     try:
         dictionaryAuxiliary = functions.groupOfFiles()
     except Exception as e:
-        print("❌ Error al obtener archivos:", e)
+        print(" Error al obtener archivos:", e)
         return []
 
     if not isinstance(dictionaryAuxiliary, list):
-        print("⚠️ groupOfFiles() no devolvió una lista válida.")
+        print("groupOfFiles() no devolvió una lista válida.")
         return []
 
     for element in dictionaryAuxiliary:
@@ -165,5 +165,5 @@ def abstractsVerification():
         if abstract and isinstance(abstract, str):
             abstracts.append(abstract)
 
-    print(f"✅ Se obtuvieron {len(abstracts)} abstracts válidos.")
+    print(f" Se obtuvieron {len(abstracts)} abstracts válidos.")
     return abstracts
