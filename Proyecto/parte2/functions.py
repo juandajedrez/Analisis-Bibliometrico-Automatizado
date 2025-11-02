@@ -18,15 +18,30 @@ def pathOfFiles():
     )
 
 
-# Lee un archivo .bib y devuelve una lista de diccionarios con 'key' y 'abstract'
 def groupOfFiles():
     filesGroup = []
+
+    # Lee el archivo BibTeX desde la ruta que devuelve pathOfFiles()
     bibtexFileRead = bibtexparser.parse_file(pathOfFiles())
+
     for entry in bibtexFileRead.entries:
-        libraryOfProduct = {}
-        if "abstract" in entry.fields_dict:
-            libraryOfProduct["abstract"] = entry.fields_dict["abstract"].value
-        libraryOfProduct["key"] = entry.key
+        # Validar que existan los campos requeridos
+        has_abstract = "abstract" in entry.fields_dict
+        has_title = "title" in entry.fields_dict
+        has_key = hasattr(entry, "key") and entry.key is not None
+
+        # Si falta alguno de los tres, se salta este registro
+        if not (has_abstract and has_title and has_key):
+            continue
+
+        # Crear el diccionario del artículo
+        libraryOfProduct = {
+            "abstract": entry.fields_dict["abstract"].value,
+            "title": entry.fields_dict["title"].value,
+            "key": entry.key,
+        }
+
+        # Agregarlo a la lista
         filesGroup.append(libraryOfProduct)
 
     return filesGroup
