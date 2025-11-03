@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Grafo con ECharts</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <style>
+        #grafo {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Visualización de Grafo</h2>
+    <div id="grafo"></div>
+
+    <script>
+        var grafoData = JSON.parse('{{ grafo_data|escapejs }}');
+
+        var chart = echarts.init(document.getElementById('grafo'));
+
+        var option = {
+            tooltip: {},
+            series: [{
+                type: 'graph',
+                layout: 'force',
+                data: grafoData.nodes,
+                links: grafoData.links,
+                roam: true,
+                label: {
+                    show: true,
+                    position: 'right'
+                },
+                force: {
+                    repulsion: 100,
+                    edgeLength: 80
+                },
+                lineStyle: {
+                    color: '#aaa'
+                }
+            }]
+        };
+
+        chart.setOption(option);
+    </script>
+</body>
+</html>
