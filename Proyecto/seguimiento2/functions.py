@@ -2,25 +2,15 @@ import networkx as nx
 
 
 def analyze_dijkstra_paths(G, articles, source_key=None):
-    """
-    Calcula caminos mínimos desde un artículo origen usando Dijkstra.
 
-    Retorna:
-        list[dict]: [{'source', 'target', 'distance', 'path'}, ...]
-    """
-
-    # Convertir similitud → distancia
     for u, v, data in G.edges(data=True):
         data["weight"] = 1 - data["weight"]
 
-    # Elegir nodo origen
     if source_key is None:
         source_key = articles[0]["key"]
 
-    # Calcular caminos mínimos
     distances, paths = nx.single_source_dijkstra(G, source=source_key, weight="weight")
 
-    # Construir lista de resultados
     results = []
     for (
         target,
