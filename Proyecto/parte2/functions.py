@@ -14,7 +14,7 @@ def pathOfFiles():
     # return "/home/karurosu/Documents/programming/python/projectsAlgorithm/Analisis-Bibliometrico-Automatizado/Proyecto/DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
     # return f"../DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
     return os.path.join(
-        settings.BASE_DIR, "DescargaApp/resources/Downloads/SAGE/IA/archivo_10_IA.bib"
+        settings.BASE_DIR, "DescargaApp/resources/Downloads/archivo_combinado/archivofinal.bib"
     )
 
 

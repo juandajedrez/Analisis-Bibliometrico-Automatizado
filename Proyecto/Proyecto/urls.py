@@ -41,4 +41,7 @@ urlpatterns = [
     path('requerimiento5/',views_images.generate_visuals_view, name="generate_visuals_view"),
     path('api/resultados',views_seguimiento2.resultados_view,name="generative_view"),
     path('seguimiento',descarga_views.mostrar_seguimiento,name="mostar html seguimiento"),
+    path('api/floyd',views_seguimiento2.componentes_view,name="mostar html seguimiento"),
+    path("api/nodos",views_seguimiento2.nodos_view, name="api_nodos"),
+
 ]

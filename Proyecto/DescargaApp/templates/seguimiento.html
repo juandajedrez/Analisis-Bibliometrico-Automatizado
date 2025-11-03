@@ -3,25 +3,77 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Resultados Dijkstra</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'mi_app/css/seguimiento.css' %}">
+    <title>Resultados de Algoritmos de Rutas</title>
+    <link rel="stylesheet" href="{% static 'mi_app/css/seguimiento.css' %}">
 </head>
 <body>
-    <div class="contenedor-tabla">
-        <table id="tablaResultados">
-            <thead>
-                <tr>
-                    <th>Source</th>
-                    <th>Target</th>
-                    <th>Distance</th>
-                    <th>Path</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Se llena dinámicamente con JS -->
-            </tbody>
-        </table>
-    </div>
+    <header>
+        <h1>Análisis de Algoritmos de Rutas</h1>
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="dijkstra">Dijkstra</button>
+            <button class="tab-button" data-tab="floyd">Floyd–Warshall</button>
+            <button class="tab-button" data-tab="componentes">Componentes</button>
+        </nav>
+    </header>
+
+    <!-- Dijkstra -->
+    <section id="dijkstra" class="tab-content active">
+        <div class="contenedor-tabla">
+            <h2>Dijkstra</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Target</th>
+                        <th>Distance</th>
+                        <th>Path</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaDijkstra">
+                    <tr><td colspan="4" class="mensaje">Cargando resultados...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Floyd -->
+    <section id="floyd" class="tab-content">
+        <div class="contenedor-tabla">
+            <h2>Floyd–Warshall</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Target</th>
+                        <th>Distance</th>
+                        <th>Path</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaFloyd">
+                    <tr><td colspan="4" class="mensaje">Cargando resultados...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Componentes -->
+    <section id="componentes" class="tab-content">
+        <div class="contenedor-tabla">
+            <h2>Componentes Fuertemente Conectados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nodos</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaComponentes">
+                    <tr><td colspan="2" class="mensaje">Cargando componentes...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
     <script src="{% static 'mi_app/js/resultados.js' %}"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
-
 import networkx as nx
+
+
 def analyze_floyd_warshall(G):
     """
     Calcula caminos mínimos entre todos los nodos usando Floyd–Warshall.
@@ -45,6 +46,7 @@ def analyze_floyd_warshall(G):
                 )
 
     return results
+
 
 def find_strongly_connected_components(G):
     """
