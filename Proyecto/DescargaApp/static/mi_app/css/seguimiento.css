@@ -1,0 +1,41 @@
+.contenedor-tabla {
+    width: 95vw;
+    min-width: 320px;
+    max-height: 80vh;
+    overflow: auto;
+    margin: 2rem auto;
+    box-shadow: 0 3px 12px #8884;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+#tablaResultados {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: min(1.15rem, 2.5vw);
+}
+
+#tablaResultados th,
+#tablaResultados td {
+    padding: 0.35em 0.75em;
+    border: 1px solid #d4d3d3;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+#tablaResultados th {
+    background: #0a69b8;
+    color: #fff;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+#tablaResultados tr:nth-child(even) {
+    background-color: #f2f7fa;
+}
+
+#tablaResultados tr:hover {
+    background: #ffe3b1;
+}

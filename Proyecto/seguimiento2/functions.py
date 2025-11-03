@@ -1,99 +1,50 @@
 import networkx as nx
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 
-def analyze_dijkstra_paths(G, articles, source_key=None):
-
-    for u, v, data in G.edges(data=True):
-        data["weight"] = 1 - data["weight"]
-
-    if source_key is None:
-        source_key = articles[0]["key"]
-
-    distances, paths = nx.single_source_dijkstra(G, source=source_key, weight="weight")
-
-    results = []
-    for (
-        target,
-        distance,
-    ) in distances.items():  # pyright: ignore[reportAttributeAccessIssue]
-        results.append(
-            {
-                "source": source_key,
-                "target": target,
-                "distance": float(distance),
-                "path": paths[target],
-            }
-        )
-
-    return results
-
-
-def analyze_floyd_warshall(G):
+def build_citation_graph(articles, threshold=0.4):
     """
-    Calcula caminos mínimos entre todos los nodos usando Floyd–Warshall.
-
-    Retorna:
-        list[dict]: [{'source', 'target', 'distance', 'path'}, ...]
-    """
-
-    # Convertir similitud → distancia
-    for u, v, data in G.edges(data=True):
-        data["weight"] = 1 - data["weight"]
-
-    # Floyd–Warshall predecesores y distancias
-    predecesores, distancias = nx.floyd_warshall_predecessor_and_distance(
-        G, weight="weight"
-    )
-
-    def reconstruir_camino(predecesores, origen, destino):
-        if origen == destino:
-            return [origen]
-        if destino not in predecesores[origen]:
-            return None
-        camino = [destino]
-        while camino[-1] != origen:
-            camino.append(predecesores[origen][camino[-1]])
-        camino.reverse()
-        return camino
-
-    # Construir lista de resultados
-    results = []
-    for origen in G.nodes():
-        for destino in G.nodes():
-            if origen != destino:
-                distancia = distancias.get(origen, {}).get(destino, float("inf"))
-                camino = reconstruir_camino(predecesores, origen, destino)
-                results.append(
-                    {
-                        "source": origen,
-                        "target": destino,
-                        "distance": float(distancia),
-                        "path": camino,
-                    }
-                )
-
-    return results
-
-
-def find_strongly_connected_components(G):
-    """
-    Identifica los grupos de artículos fuertemente interrelacionados
-    en un grafo dirigido de citaciones.
+    Construye un grafo dirigido de citaciones a partir de una lista de artículos.
+    Cada nodo es un artículo y cada arista indica citación implícita basada en similitud TF-IDF + coseno.
 
     Parámetros:
     -----------
-    G : nx.DiGraph
-        Grafo de citaciones.
+    articles : list[dict]
+        Lista de artículos, cada uno con 'key', 'title' y 'abstract'.
+    threshold : float
+        Umbral mínimo de similitud para crear una arista (0–1).
 
     Retorna:
     --------
-    list[list[str]]
-        Lista de componentes, cada componente es una lista de claves de artículos.
+    G : nx.DiGraph
+        Grafo dirigido con nodos y aristas ponderadas por similitud.
     """
-    # NetworkX devuelve un generador de listas de nodos
-    scc_generator = nx.strongly_connected_components(G)
+    articles = [a for a in articles if "key" in a and "title" in a and "abstract" in a]
+    if not articles:
+        raise ValueError("No hay artículos válidos con 'key', 'title' y 'abstract'.")
 
-    # Convertir a lista de listas
-    scc_list = [list(component) for component in scc_generator]
+    keys = [a["key"] for a in articles]
+    texts = [f"{a['title']} {a['abstract']}" for a in articles]
 
-    return scc_list
+    tfidf_matrix = TfidfVectorizer(stop_words="english").fit_transform(texts)
+    sim_matrix = cosine_similarity(tfidf_matrix)
+
+    G = nx.DiGraph()
+    G.add_nodes_from(keys)
+
+    n = len(keys)
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                sim = float(sim_matrix[i, j])
+                if sim > threshold:
+                    G.add_edge(keys[i], keys[j], weight=sim)
+
+    for u, v, data in list(G.edges(data=True)):
+        try:
+            data["weight"] = float(data["weight"])
+        except:
+            G.remove_edge(u, v)
+
+    return G
