@@ -3,7 +3,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-def build_citation_graph(articles, threshold=0.4):
+def build_citation_graph(threshold=0.4):
     """
     Construye un grafo dirigido de citaciones a partir de una lista de artículos.
     Cada nodo es un artículo y cada arista indica citación implícita basada en similitud TF-IDF + coseno.
@@ -20,7 +20,7 @@ def build_citation_graph(articles, threshold=0.4):
     G : nx.DiGraph
         Grafo dirigido con nodos y aristas ponderadas por similitud.
     """
-
+    articles = _PathOfFile()
     # 1️⃣ Filtrar artículos válidos
     articles = [a for a in articles if "key" in a and "title" in a and "abstract" in a]
     if not articles:
