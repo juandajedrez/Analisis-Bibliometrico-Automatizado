@@ -21,6 +21,8 @@ from django.urls import path
 from parte2 import views as views_algorithm
 from parte3 import views as analizar_views
 from mi_app import views as views_images
+from seguimiento2 import views as views_seguimiento2
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -36,5 +38,7 @@ urlpatterns = [
     path("analizer/view", descarga_views.mostrar_analizador, name="view analizer"),    
     path('requerimiento4/', views_images.generate_dendograma_view,name="generate_dendograma_view"),
     path('dendrogram/<str:tipo>/', views_images.dendrogram_detail, name='dendrogram_detail'),
-    path('requerimiento5/',views_images.generate_visuals_view, name="generate_visuals_view")
+    path('requerimiento5/',views_images.generate_visuals_view, name="generate_visuals_view"),
+    path('api/resultados',views_seguimiento2.resultados_view,name="generative_view"),
+    path('seguimiento',descarga_views.mostrar_seguimiento,name="mostar html seguimiento"),
 ]

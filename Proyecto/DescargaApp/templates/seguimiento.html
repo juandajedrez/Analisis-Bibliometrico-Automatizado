@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Resultados Dijkstra</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/resultados.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'mi_app/css/seguimiento.css' %}">
 </head>
 <body>
     <div class="contenedor-tabla">
@@ -17,17 +18,11 @@
                 </tr>
             </thead>
             <tbody>
-                {% for res in resultados %}
-                <tr>
-                    <td>{{ res.source }}</td>
-                    <td>{{ res.target }}</td>
-                    <td>{{ res.distance|floatformat:6 }}</td>
-                    <td>{{ res.path|join:" → " }}</td>
-                </tr>
-                {% endfor %}
+                <!-- Se llena dinámicamente con JS -->
             </tbody>
         </table>
     </div>
-    <script src="{% static 'js/resultados.js' %}"></script>
+    <script src="{% static 'mi_app/js/resultados.js' %}"></script>
 </body>
 </html>
+

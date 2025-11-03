@@ -62,6 +62,9 @@ def mostrar_html(request):
 def mostrar_analizador(request):
     return render(request, "analizador.html")
 
+def mostrar_seguimiento(request):
+    return render(request,"seguimiento.html")
+
 
 def generate_final_file():
     merge_files()
